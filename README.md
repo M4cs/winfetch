@@ -13,7 +13,6 @@ Winfetch is still extremely early in development. The configuration is minimal a
 
 #### Planned Features:
 
-- Load Custom ASCII Art
 - Scaling To Terminal Size
 - Display Images (Does Windows Terminal even support this??)
 
