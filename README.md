@@ -87,7 +87,7 @@ The default config is as follows:
 
 [ghw](https://github.com/jaypipes/ghw) - Hardware/System Information
 
-[fatih/color](https://github.com/fatih/color) - Color Printing To Terminal
+[xterm-256](https://github.com/gilliek/go-xterm256) - Color Printing To Terminal
 
 [neofetch](https://github.com/dylanaraps/neofetch) - Inspiration and Ascii Art
 
