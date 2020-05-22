@@ -1,7 +1,7 @@
 <p align="center">
     <b>
     <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/logo.png"/><br>
-    <img src="https://img.shields.io/github/stars/M4cs/winfetch"> <img src="https://img.shields.io/github/issues/M4cs/winfetch"> <img src="https://img.shields.io/badge/build-passing-green">
+    <img src="https://img.shields.io/github/stars/M4cs/winfetch"> <img src="https://img.shields.io/github/issues/M4cs/winfetch"> <img src="https://img.shields.io/badge/build-passing-green"> <a href="https://codeclimate.com/github/M4cs/winfetch/maintainability"><img src="https://api.codeclimate.com/v1/badges/5d5dcd97b51f9e01189c/maintainability" /></a>
     <p align="center">A command-line system info tool written in Go for Windows</p>
     <p align="center">Inspired by <a href="https://github.com/dylanaraps/neofetch">neofetch</a></p>
     <p align="center"><img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.gif"/></p></b>
