@@ -3,8 +3,8 @@
     <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/logo.png"/>
     <p align="center">winfetch</h1>
     <p align="center">A command-line system info tool written in Go for Windows</p>
-    <p align="center">Inspired by [neofetch](https://github.com/dylanaraps/neofetch)</p></b>
-    <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.gif"/>
+    <p align="center">Inspired by <a href="https://github.com/dylanaraps/neofetch">neofetch</a></p>
+    <p align="center"><img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.gif"/></p></b>
 </p>
 
 
@@ -43,6 +43,30 @@ go build
 ```
 
 You will now have a `winfetch.exe` file in your directory!
+
+## Configuration
+
+There isn't much to the config at the moment but you can find it at `.winfetch.json` in your Home folder.
+
+The default config is as follows:
+
+```json
+{
+ "showPhysMem": true,
+ "showUsableMem": true,
+ "showTotalCPUCores": true,
+ "showTotalCPUThreads": true,
+ "showGPUS": true,
+ "showTotalDiskSize": true,
+ "showWindowsVersion": true,
+ "showBios": true,
+ "showBaseboard": true,
+ "showAscii": true
+}
+```
+
+Currently you can only decide what to display in the Winfetch prompt.
+
 
 ## Dependencies
 
