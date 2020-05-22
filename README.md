@@ -4,7 +4,7 @@
     <p align="center">winfetch</h1>
     <p align="center">A command-line system info tool written in Go for Windows</p>
     <p align="center">Inspired by <a href="https://github.com/dylanaraps/neofetch">neofetch</a></p>
-    <a href="" align="center"><img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.gif"/></a></b>
+    <p align="center"><img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.gif"/></p></b>
 </p>
 
 
