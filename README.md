@@ -82,8 +82,6 @@ The default config is as follows:
 }
 ```
 
-Currently you can only decide what to display in the Winfetch prompt.
-
 
 ## Dependencies
 
