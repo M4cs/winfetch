@@ -7,11 +7,5 @@ go:
 
 go_import_path: github.com/M4cs/winfetch
 
-before_script:
-  - go get github.com/M4cs/winfetch
-
 script:
   - go build
-
-after_script:
-  - winfetch
