@@ -96,21 +96,21 @@ llllllllllllll  lllllllllllllllllll
  'ccllllllllll  lllllllllllllllllll
        ' \\*::  :ccllllllllllllllll
                    ''''''''''*::cll
-							   ''''`
-var winArtSmall string = `                          .
+                               ''''`
+var winArtSmall string = `                              .
                   ....,,:;+ccll
       ..,+:;  cllllllllllllllll
 ,cclllllllll  lllllllllllllllll
 llllllllllll  lllllllllllllllll
 llllllllllll  lllllllllllllllll
 llllllllllll  lllllllllllllllll
-				 
+                               
 llllllllllll  lllllllllllllllll
 llllllllllll  lllllllllllllllll
 llllllllllll  lllllllllllllllll
  'ccllllllll  lllllllllllllllll
      ' \\*::  :ccllllllllllllll
-				 ''''''''''*::;`
+                 ''''''''''*::;`
 	memory, err := ghw.Memory()
 	if err != nil {
 		fmt.Printf("Error getting memory info: %v", err)
@@ -227,7 +227,20 @@ llllllllllll  lllllllllllllllll
 	s = append(s, "")
 	s = append(s, "    " + xterm256.Sprint(xterm256.LightGray, "███") + xterm256.Sprint(xterm256.Red, "███") + xterm256.Sprint(xterm256.Green, "███") + xterm256.Sprint(xterm256.Yellow, "███") + xterm256.Sprint(xterm256.Blue, "███") + xterm256.Sprint(xterm256.Magenta, "███") + xterm256.Sprint(xterm256.Cyan, "███"))
 	s = append(s, "    " + xterm256.Sprint(xterm256.DarkGray, "███") + xterm256.Sprint(xterm256.DarkRed, "███") + xterm256.Sprint(xterm256.DarkGreen, "███") + xterm256.Sprint(xterm256.DarkYellow, "███") + xterm256.Sprint(xterm256.DarkBlue, "███") + xterm256.Sprint(xterm256.DarkMagenta, "███") + xterm256.Sprint(xterm256.DarkCyan, "███"))
-	scanner := bufio.NewScanner(strings.NewReader(winArt))
+	scanner := bufio.NewScanner(strings.NewReader(""))
+	if (config.UseSmallAscii){
+		scanner = bufio.NewScanner(strings.NewReader(winArtSmall))
+	} else {
+		scanner = bufio.NewScanner(strings.NewReader(winArt))
+	}
+	if (config.UseCustomAscii){
+		content, err := ioutil.ReadFile(config.CustomAsciiPath)
+		if (err != nil) {
+			log.Fatal(err)
+		}
+		text := string(content)
+		scanner = bufio.NewScanner(strings.NewReader(text))
+	}
 	index := 0
 	for i, str := range s {
 		fmt.Println(xterm256.Sprint(ascii, winArtResult[i]) + "    " + str)
