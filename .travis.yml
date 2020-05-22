@@ -1,0 +1,9 @@
+language: go
+os: windows
+
+go:
+- 1.14
+- master
+
+go_import_path: github.com/M4cs/winfetch
+
