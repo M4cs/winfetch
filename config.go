@@ -13,7 +13,10 @@ type Config struct {
 	ShowBaseboard bool `json:"showBaseboard"`
 	ShowAscii bool `json:"showAscii"`
 	UseDefaultColors bool `json:"useDefaultColors"`
+	UseSmallAscii bool `json:"useSmallAscii"`
 	AsciiColor string `json:"asciiColor"`
+	UseCustomAscii bool `json:"useCustomAscii"`
+	CustomAsciiPath string `json:"customAsciiPath"`
 	UserColor string `json:"userColor"`
 	SepColor string `json:"sepColor"`
 	TitleColor string `json:"titleColor"`
@@ -45,6 +48,9 @@ func newConfig() Config {
 	config.ShowBios = true
 	config.ShowBaseboard = true
 	config.ShowAscii = true
+	config.UseSmallAscii = false
+	config.UseCustomAscii = false
+	config.CustomAsciiPath = ""
 	config.UseDefaultColors = true
 	config.AsciiColor = "Blue"
 	config.UserColor = "Red"

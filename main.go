@@ -96,8 +96,21 @@ llllllllllllll  lllllllllllllllllll
  'ccllllllllll  lllllllllllllllllll
        ' \\*::  :ccllllllllllllllll
                    ''''''''''*::cll
-                               ''''`
-	winArtResult := strings.Split(winArt, "\n")
+							   ''''`
+var winArtSmall string = `                          .
+                  ....,,:;+ccll
+      ..,+:;  cllllllllllllllll
+,cclllllllll  lllllllllllllllll
+llllllllllll  lllllllllllllllll
+llllllllllll  lllllllllllllllll
+llllllllllll  lllllllllllllllll
+				 
+llllllllllll  lllllllllllllllll
+llllllllllll  lllllllllllllllll
+llllllllllll  lllllllllllllllll
+ 'ccllllllll  lllllllllllllllll
+     ' \\*::  :ccllllllllllllll
+				 ''''''''''*::;`
 	memory, err := ghw.Memory()
 	if err != nil {
 		fmt.Printf("Error getting memory info: %v", err)
@@ -118,7 +131,19 @@ llllllllllllll  lllllllllllllllllll
 	if err = jsonParser.Decode(&config); err != nil{
 		log.Fatal("Error Parsing Config File: ", err.Error())
 	}
-
+	var winArtResult []string
+	if (config.UseSmallAscii){
+		winArtResult = strings.Split(winArtSmall, "\n")
+	} else {
+		winArtResult = strings.Split(winArt, "\n")
+	}
+	if (config.UseCustomAscii){
+		content, err := ioutil.ReadFile(config.CustomAsciiPath)
+		if err != nil {
+			log.Fatal(err)
+		}
+		winArtResult = strings.Split(string(content), "\n")
+	}
 	title := xterm256.Green
 	ascii := xterm256.Blue
 	sep := xterm256.Red
