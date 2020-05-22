@@ -8,16 +8,15 @@
 </p>
 
 
-<img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.png" align="right" height="250px">
+
 
 ### Overview
 Winfetch is still extremely early in development. The configuration is minimal and there is little to no customization for titles until I add them! This is my first Go program and I have only known it as of last night (when creating this repository).
 
-#### Planned Features:
-
-- Scaling To Terminal Size
-
-<img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview1.png" align="right" height="250px">
+<p align="center">
+    <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.png" align="center" height="270px">
+    <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview1.png" align="center" height="270px">
+</p>
 
 ### Installation
 
