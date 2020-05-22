@@ -3,7 +3,9 @@ package main
 type Config struct {
 	ShowUser bool `json:"showUser"`
 	ShowSep bool `json:"showSep"`
+	ShowUptime bool `json:"showUptime"`
 	ShowMem bool `json:"showMem"`
+	ShowCPU bool `json:"showCPU"`
 	ShowTotalCPUCores bool `json:"showTotalCPUCores"`
 	ShowTotalCPUThreads bool `json:"showTotalCPUThreads"`
 	ShowGPUS bool `json:"showGPUS"`
@@ -11,6 +13,7 @@ type Config struct {
 	ShowWindowsVersion bool `json:"showWindowsVersion"`
 	ShowBios bool `json:"showBios"`
 	ShowBaseboard bool `json:"showBaseboard"`
+	ShowProcessCount bool `json:"showProcessCount"`
 	ShowAscii bool `json:"showAscii"`
 	UseDefaultColors bool `json:"useDefaultColors"`
 	UseSmallAscii bool `json:"useSmallAscii"`
@@ -26,6 +29,7 @@ type Config struct {
 
 type TitleValues struct {
 	Memory string `json:"memory"`
+	CPU string `json:"cpu"`
 	CPUCores string `json:"cpuCores"`
 	CPUThreads string `json:"cpuThreads"`
 	GPUs string `json:"gpus"`
@@ -33,13 +37,17 @@ type TitleValues struct {
 	WindowsVersion string `json:"windowsVersion"`		
 	Bios string `json:"bios"`
 	Baseboard string `json:"baseboard"`
+	ProcessCount string `json:"processCount"`
+	Uptime string `json:"uptime"`
 }
 
 func newConfig() Config {
 	config := Config{}
 	config.ShowUser = true
+	config.ShowUptime = true
 	config.ShowSep = true
 	config.ShowMem = true
+	config.ShowCPU = true
 	config.ShowTotalCPUCores = true
 	config.ShowTotalCPUThreads = true
 	config.ShowGPUS = true
@@ -48,6 +56,7 @@ func newConfig() Config {
 	config.ShowBios = true
 	config.ShowBaseboard = true
 	config.ShowAscii = true
+	config.ShowProcessCount = true
 	config.UseSmallAscii = false
 	config.UseCustomAscii = false
 	config.CustomAsciiPath = ""
@@ -65,5 +74,8 @@ func newConfig() Config {
 	config.Titles.WindowsVersion = "Windows Ver."
 	config.Titles.Bios = "BIOS"
 	config.Titles.Baseboard = "Baseboard"
+	config.Titles.Uptime = "Uptime"
+	config.Titles.ProcessCount = "Processes"
+	config.Titles.CPU = "CPU #"
 	return config
 }

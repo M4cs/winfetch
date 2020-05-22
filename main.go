@@ -10,7 +10,9 @@ import (
 	"encoding/json"
 	"io/ioutil"
 
-
+	ps "github.com/shirou/gopsutil/process"
+	hst "github.com/shirou/gopsutil/host"
+	// cp "github.com/shirou/gopsutil/cpu"
 	"github.com/jaypipes/ghw"
 	"golang.org/x/sys/windows/registry"
 	"github.com/gilliek/go-xterm256/xterm256"
@@ -160,6 +162,15 @@ llllllllllll  lllllllllllllllll
 
 	s = append(s, xterm256.Sprint(userc, strings.ReplaceAll(user.Username, "\\", "@")))
 	s = append(s, xterm256.Sprint(sep, "--------------------------------"))
+	
+	if (config.ShowUptime){
+		uptime, err := hst.Uptime()
+		if (err != nil) {
+			log.Fatal("Failed to Get Uptime!")
+		}
+		uptimes := secondsToHuman(int(uptime))
+		s = append(s, xterm256.Sprint(title, config.Titles.Uptime + ": ") + xterm256.Sprint(info, uptimes))
+	}
 
 	memorySplit := strings.Split(memory.String(), "(")
 	mem := strings.Split(memorySplit[1], ",")
@@ -168,10 +179,16 @@ llllllllllll  lllllllllllllllll
 	if (config.ShowMem) {
 		s = append(s, xterm256.Sprint(title, config.Titles.Memory + ": ") + xterm256.Sprint(info, strings.ReplaceAll(usableMem[0], "MB ", "GB") + "/" + strings.ReplaceAll(physMem[0], "MB", "GB")))
 	}
-	if (config.ShowTotalCPUCores || config.ShowTotalCPUThreads){
+	if (config.ShowTotalCPUCores || config.ShowTotalCPUThreads || config.ShowCPU){
 		cpu, err := ghw.CPU()
 		if err != nil {
 			fmt.Printf("Error getting CPU info: %v", err)
+		}
+		if (config.ShowCPU){
+			in := 0
+			for x := range cpu.Processors {
+				s = append(s, xterm256.Sprint(title, "CPU #" + fmt.Sprint(in) + ": ") + xterm256.Sprint(info, cpu.Processors[x].Model))
+			}
 		}
 		if (config.ShowTotalCPUCores){
 			s = append(s, xterm256.Sprint(title, config.Titles.CPUCores + ": ") +   xterm256.Sprint(info, fmt.Sprint(cpu.TotalCores)))
@@ -179,6 +196,15 @@ llllllllllll  lllllllllllllllll
 		if (config.ShowTotalCPUThreads){
 			s = append(s, xterm256.Sprint(title, config.Titles.CPUThreads + ": ") +  xterm256.Sprint(info, fmt.Sprint(cpu.TotalThreads)))
 		}
+	}
+	if (config.ShowProcessCount){
+		pids, err := ps.Pids()
+
+		if err != nil {
+			log.Fatal("Couldn't get Processes!")
+		}
+
+		s = append(s, xterm256.Sprint(title, "Proccesses Running: ") + xterm256.Sprint(info, int64(len(pids))))
 	}
 	if (config.ShowWindowsVersion){
 		k, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows NT\CurrentVersion`, registry.QUERY_VALUE)
@@ -203,12 +229,9 @@ llllllllllll  lllllllllllllllll
 		}
 		gpuin := 0
 		for _, c := range gpu.GraphicsCards {
-			s = append(s, xterm256.Sprint(title, config.Titles.GPUs + ": " + fmt.Sprint(gpuin) + ": ") +  xterm256.Sprint(info, c.DeviceInfo.Product.Name))
+			s = append(s, xterm256.Sprint(title, config.Titles.GPUs + fmt.Sprint(gpuin) + ": ") +  xterm256.Sprint(info, c.DeviceInfo.Product.Name))
 			gpuin++
 		}
-	}
-	if (config.ShowWindowsVersion){
-		
 	}
 	if (config.ShowBios){
 		bios, err := ghw.BIOS()
