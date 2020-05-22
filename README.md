@@ -16,7 +16,6 @@ Winfetch is still extremely early in development. The configuration is minimal a
 #### Planned Features:
 
 - Scaling To Terminal Size
-- Display Images (Does Windows Terminal even support this??)
 
 <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview1.png" align="right" height="250px">
 
