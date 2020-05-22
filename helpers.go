@@ -34,19 +34,19 @@ func ByteFormat(inputNum float64, precision int) string {
 			unit = " EB" // exabyte
 	} else if inputNum >= 1000000000000000 {
 			returnVal = RoundUp((inputNum / 1125899906842624), precision)
-			unit = " EB" // petabyte
+			unit = " PB" // petabyte
 	} else if inputNum >= 1000000000000 {
 			returnVal = RoundUp((inputNum / 1099511627776), precision)
-			unit = " PB" // terrabyte
+			unit = " TB" // terrabyte
 	} else if inputNum >= 1000000000 {
 			returnVal = RoundUp((inputNum / 1073741824), precision)
-			unit = " TB" // gigabyte
+			unit = " GB" // gigabyte
 	} else if inputNum >= 1000000 {
 			returnVal = RoundUp((inputNum / 1048576), precision)
-			unit = " GB" // megabyte
+			unit = " MB" // megabyte
 	} else if inputNum >= 1000 {
 			returnVal = RoundUp((inputNum / 1024), precision)
-			unit = " MB" // kilobyte
+			unit = " KB" // kilobyte
 	} else {
 			returnVal = inputNum
 			unit = " bytes" // byte

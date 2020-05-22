@@ -66,11 +66,12 @@ llllllllllllll  lllllllllllllllllll
 	}
 	s = append(s, red(user.Username))
 	s = append(s, red("----------------"))
-	if (config.ShowPhysMem){
-		s = append(s, green("Physical Memory: ") + ByteFormat(float64(memory.TotalPhysicalBytes), 1))
-	}
-	if (config.ShowUsableMem){
-		s = append(s, green("Usable Phys Mem.: ") + ByteFormat(float64(memory.TotalUsableBytes), 1))
+	memorySplit := strings.Split(memory.String(), "(")
+	mem := strings.Split(memorySplit[1], ",")
+	usableMem := strings.Split(mem[1], "usable")
+	physMem := strings.Split(mem[0], "physical")
+	if (config.ShowMem) {
+		s = append(s, green("Memory: ") + strings.ReplaceAll(usableMem[0], "MB ", "GB") + "/" + strings.ReplaceAll(physMem[0], "MB", "GB"))
 	}
 	if (config.ShowTotalCPUCores || config.ShowTotalCPUThreads){
 		cpu, err := ghw.CPU()

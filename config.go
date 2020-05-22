@@ -1,8 +1,7 @@
 package main
 
 type Config struct {
-	ShowPhysMem bool `json:"showPhysMem"`
-	ShowUsableMem bool `json:"showUsableMem"` 
+	ShowMem bool `json:"showMem"`
 	ShowTotalCPUCores bool `json:"showTotalCPUCores"`
 	ShowTotalCPUThreads bool `json:"showTotalCPUThreads"`
 	ShowGPUS bool `json:"showGPUS"`
@@ -15,8 +14,7 @@ type Config struct {
 
 func newConfig() Config {
 	config := Config{}
-	config.ShowPhysMem = true
-	config.ShowUsableMem = true
+	config.ShowMem = true
 	config.ShowTotalCPUCores = true
 	config.ShowTotalCPUThreads = true
 	config.ShowGPUS = true
