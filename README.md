@@ -52,8 +52,7 @@ The default config is as follows:
 
 ```json
 {
- "showPhysMem": true,
- "showUsableMem": true,
+ "showMem": true,
  "showTotalCPUCores": true,
  "showTotalCPUThreads": true,
  "showGPUS": true,
