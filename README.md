@@ -44,6 +44,30 @@ go build
 
 You will now have a `winfetch.exe` file in your directory!
 
+## Configuration
+
+There isn't much to the config at the moment but you can find it at `.winfetch.json` in your Home folder.
+
+The default config is as follows:
+
+```json
+{
+ "showPhysMem": true,
+ "showUsableMem": true,
+ "showTotalCPUCores": true,
+ "showTotalCPUThreads": true,
+ "showGPUS": true,
+ "showTotalDiskSize": true,
+ "showWindowsVersion": true,
+ "showBios": true,
+ "showBaseboard": true,
+ "showAscii": true
+}
+```
+
+Currently you can only decide what to display in the Winfetch prompt.
+
+
 ## Dependencies
 
 [ghw](https://github.com/jaypipes/ghw) - Hardware/System Information
