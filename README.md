@@ -4,9 +4,11 @@
     <img src="https://img.shields.io/github/stars/M4cs/winfetch"> <img src="https://img.shields.io/github/issues/M4cs/winfetch"> <img src="https://travis-ci.com/M4cs/winfetch.svg?branch=master"> <a href="https://codeclimate.com/github/M4cs/winfetch/maintainability"><img src="https://api.codeclimate.com/v1/badges/5d5dcd97b51f9e01189c/maintainability" /></a>
     <p align="center">A command-line system info tool written in Go for Windows</p>
     <p align="center">Inspired by <a href="https://github.com/dylanaraps/neofetch">neofetch</a></p>
-    <p align="center"><img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.gif"/></p></b>
+    </b>
 </p>
 
+
+<img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.png" align="right" height="250px">
 
 ### Overview
 Winfetch is still extremely early in development. The configuration is minimal and there is little to no customization for titles until I add them! This is my first Go program and I have only known it as of last night (when creating this repository).
@@ -15,6 +17,8 @@ Winfetch is still extremely early in development. The configuration is minimal a
 
 - Scaling To Terminal Size
 - Display Images (Does Windows Terminal even support this??)
+
+<img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview1.png" align="right" height="250px">
 
 ### Installation
 
