@@ -52,6 +52,8 @@ The default config is as follows:
 
 ```json
 {
+ "showUser": true,
+ "showSep": true,
  "showMem": true,
  "showTotalCPUCores": true,
  "showTotalCPUThreads": true,
@@ -60,7 +62,23 @@ The default config is as follows:
  "showWindowsVersion": true,
  "showBios": true,
  "showBaseboard": true,
- "showAscii": true
+ "showAscii": true,
+ "useDefaultColors": true,
+ "asciiValue": "Blue",
+ "userColor": "Red",
+ "sepColor": "Red",
+ "titleColor": "Green",
+ "infoColor": "White",
+ "titles": {
+  "memory": "Memory",
+  "cpuCores": "CPU Cores",
+  "cpuThreads": "CPU Threads",
+  "gpus": "GPU #",
+  "diskSize": "Disk Size",
+  "windowsVersion": "Windows Ver.",
+  "bios": "BIOS",
+  "baseboard": "Baseboard"
+ }
 }
 ```
 
