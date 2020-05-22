@@ -3,6 +3,17 @@ package main
 import (
 	"math"
 	"strconv"
+	"strings"
+	"os/user"
+	"log"
+	"fmt"
+
+	ps "github.com/shirou/gopsutil/process"
+	hst "github.com/shirou/gopsutil/host"
+	// cp "github.com/shirou/gopsutil/cpu"
+	"github.com/jaypipes/ghw"
+	"golang.org/x/sys/windows/registry"
+	"github.com/gilliek/go-xterm256/xterm256"
 )
 
 func RoundUp(input float64, places int) (newVal float64) {
@@ -96,4 +107,105 @@ func secondsToHuman(input int) (result string) {
 	}
 
 	return
+}
+
+func generateInfo(config Config, title xterm256.Color, info xterm256.Color, userc xterm256.Color, sep xterm256.Color) []string {
+	var s []string
+	cpu, err := ghw.CPU()
+	if err != nil {
+		fmt.Printf("Error getting CPU info: %v", err)
+	}
+	for x := range config.Format {
+		switch config.Format[x] {
+		case "user":
+			user, _ := user.Current()
+			s = append(s, xterm256.Sprint(userc, strings.ReplaceAll(user.Username, "\\", "@")))
+		case "uptime":
+			uptime, err := hst.Uptime()
+			if (err != nil) {
+				log.Fatal("Failed to Get Uptime!")
+			}
+			uptimes := secondsToHuman(int(uptime))
+			s = append(s, xterm256.Sprint(title, config.Titles.Uptime + ": ") + xterm256.Sprint(info, uptimes))
+		case "sep":
+			s = append(s, xterm256.Sprint(sep, "--------------------------------"))
+		case "mem":
+			memory, err := ghw.Memory()
+			if err != nil {
+				fmt.Printf("Error getting memory info: %v", err)
+			}
+			memorySplit := strings.Split(memory.String(), "(")
+			mem := strings.Split(memorySplit[1], ",")
+			usableMem := strings.Split(mem[1], "usable")
+			physMem := strings.Split(mem[0], "physical")
+			s = append(s, xterm256.Sprint(title, config.Titles.Memory + ": ") + xterm256.Sprint(info, strings.ReplaceAll(usableMem[0], "MB ", "GB") + "/" + strings.ReplaceAll(physMem[0], "MB", "GB")))	
+		case "cpuThreads":
+			s = append(s, xterm256.Sprint(title, config.Titles.CPUThreads + ": ") +  xterm256.Sprint(info, fmt.Sprint(cpu.TotalThreads)))
+		case "cpuCores":
+			s = append(s, xterm256.Sprint(title, config.Titles.CPUCores + ": ") +   xterm256.Sprint(info, fmt.Sprint(cpu.TotalCores)))
+		case "cpu":
+			in := 0
+			for x := range cpu.Processors {
+				s = append(s, xterm256.Sprint(title, "CPU #" + fmt.Sprint(in) + ": ") + xterm256.Sprint(info, cpu.Processors[x].Model))
+			}
+		case "procs":
+			pids, err := ps.Pids()
+
+			if err != nil {
+				log.Fatal("Couldn't get Processes!")
+			}
+
+			s = append(s, xterm256.Sprint(title, "Proccesses Running: ") + xterm256.Sprint(info, int64(len(pids))))
+		case "wversion":
+			k, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows NT\CurrentVersion`, registry.QUERY_VALUE)
+	
+			pn, _, err := k.GetStringValue("ProductName")
+			if err != nil {
+				log.Fatal(err)
+			}
+			s = append(s, xterm256.Sprint(title, config.Titles.WindowsVersion + ": ") + xterm256.Sprint(info, pn))
+		
+		case "disk":
+			bi, err := ghw.Block()
+			if err != nil {
+				fmt.Printf("Error getting disk info: %v", err)
+			}
+			s = append(s, xterm256.Sprint(title, config.Titles.DiskSize + ": ") +  xterm256.Sprint(info, ByteFormat(float64(bi.TotalPhysicalBytes), 1)))
+		case "gpus":
+			gpu, err := ghw.GPU()
+			if err != nil {
+				fmt.Printf("Error getting GPU info: %v", err)
+			}
+			gpuin := 0
+			if (len(gpu.GraphicsCards) > 1){
+				for _, c := range gpu.GraphicsCards {
+					s = append(s, xterm256.Sprint(title, config.Titles.GPUs + " #" + fmt.Sprint(gpuin) + ": ") +  xterm256.Sprint(info, c.DeviceInfo.Product.Name))
+					gpuin++
+				}
+			} else {
+				s = append(s, xterm256.Sprint(title, config.Titles.GPUs + ": ") +  xterm256.Sprint(info, gpu.GraphicsCards[0].DeviceInfo.Product.Name))
+			}
+		case "bios":
+			bios, err := ghw.BIOS()
+			if err != nil {
+				fmt.Printf("Error getting BIOS info: %v", err)
+			}
+			s = append(s, xterm256.Sprint(title, config.Titles.Bios + ": ") +  xterm256.Sprint(info, bios.Vendor))
+		
+		case "baseboard":
+			bb, err := ghw.Baseboard()
+			if err != nil {
+				fmt.Printf("Error getting BB info: %v", err)
+			}
+			s = append(s, xterm256.Sprint(title, config.Titles.Baseboard + ": ")  + xterm256.Sprint(info, bb.Vendor))
+		
+		default:
+			s = append(s, "\n")
+		}
+		
+	}
+	s = append(s, "")
+	s = append(s, "    " + xterm256.Sprint(xterm256.LightGray, "███") + xterm256.Sprint(xterm256.Red, "███") + xterm256.Sprint(xterm256.Green, "███") + xterm256.Sprint(xterm256.Yellow, "███") + xterm256.Sprint(xterm256.Blue, "███") + xterm256.Sprint(xterm256.Magenta, "███") + xterm256.Sprint(xterm256.Cyan, "███"))
+	s = append(s, "    " + xterm256.Sprint(xterm256.DarkGray, "███") + xterm256.Sprint(xterm256.DarkRed, "███") + xterm256.Sprint(xterm256.DarkGreen, "███") + xterm256.Sprint(xterm256.DarkYellow, "███") + xterm256.Sprint(xterm256.DarkBlue, "███") + xterm256.Sprint(xterm256.DarkMagenta, "███") + xterm256.Sprint(xterm256.DarkCyan, "███"))
+	return s
 }

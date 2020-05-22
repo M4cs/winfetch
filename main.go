@@ -9,12 +9,6 @@ import (
 	"os"
 	"encoding/json"
 	"io/ioutil"
-
-	ps "github.com/shirou/gopsutil/process"
-	hst "github.com/shirou/gopsutil/host"
-	// cp "github.com/shirou/gopsutil/cpu"
-	"github.com/jaypipes/ghw"
-	"golang.org/x/sys/windows/registry"
 	"github.com/gilliek/go-xterm256/xterm256"
 )
 
@@ -99,7 +93,7 @@ llllllllllllll  lllllllllllllllllll
        ' \\*::  :ccllllllllllllllll
                    ''''''''''*::cll
                                ''''`
-var winArtSmall string = `                              .
+	var winArtSmall string = `                              .
                   ....,,:;+ccll
       ..,+:;  cllllllllllllllll
 ,cclllllllll  lllllllllllllllll
@@ -112,11 +106,7 @@ llllllllllll  lllllllllllllllll
 llllllllllll  lllllllllllllllll
  'ccllllllll  lllllllllllllllll
      ' \\*::  :ccllllllllllllll
-                 ''''''''''*::;`
-	memory, err := ghw.Memory()
-	if err != nil {
-		fmt.Printf("Error getting memory info: %v", err)
-	}
+				 ''''''''''*::;`
 	user, err := user.Current()
 	if _, err := os.Stat(user.HomeDir + "\\.winfetch.json"); os.IsNotExist(err) {
 		config := newConfig()
@@ -146,6 +136,7 @@ llllllllllll  lllllllllllllllll
 		}
 		winArtResult = strings.Split(string(content), "\n")
 	}
+
 	title := xterm256.Green
 	ascii := xterm256.Blue
 	sep := xterm256.Red
@@ -159,97 +150,7 @@ llllllllllll  lllllllllllllllll
 		userc = getCustomColor(config.UserColor)
 		info = getCustomColor(config.InfoColor)
 	}
-
-	s = append(s, xterm256.Sprint(userc, strings.ReplaceAll(user.Username, "\\", "@")))
-	s = append(s, xterm256.Sprint(sep, "--------------------------------"))
-	
-	if (config.ShowUptime){
-		uptime, err := hst.Uptime()
-		if (err != nil) {
-			log.Fatal("Failed to Get Uptime!")
-		}
-		uptimes := secondsToHuman(int(uptime))
-		s = append(s, xterm256.Sprint(title, config.Titles.Uptime + ": ") + xterm256.Sprint(info, uptimes))
-	}
-
-	memorySplit := strings.Split(memory.String(), "(")
-	mem := strings.Split(memorySplit[1], ",")
-	usableMem := strings.Split(mem[1], "usable")
-	physMem := strings.Split(mem[0], "physical")
-	if (config.ShowMem) {
-		s = append(s, xterm256.Sprint(title, config.Titles.Memory + ": ") + xterm256.Sprint(info, strings.ReplaceAll(usableMem[0], "MB ", "GB") + "/" + strings.ReplaceAll(physMem[0], "MB", "GB")))
-	}
-	if (config.ShowTotalCPUCores || config.ShowTotalCPUThreads || config.ShowCPU){
-		cpu, err := ghw.CPU()
-		if err != nil {
-			fmt.Printf("Error getting CPU info: %v", err)
-		}
-		if (config.ShowCPU){
-			in := 0
-			for x := range cpu.Processors {
-				s = append(s, xterm256.Sprint(title, "CPU #" + fmt.Sprint(in) + ": ") + xterm256.Sprint(info, cpu.Processors[x].Model))
-			}
-		}
-		if (config.ShowTotalCPUCores){
-			s = append(s, xterm256.Sprint(title, config.Titles.CPUCores + ": ") +   xterm256.Sprint(info, fmt.Sprint(cpu.TotalCores)))
-		}
-		if (config.ShowTotalCPUThreads){
-			s = append(s, xterm256.Sprint(title, config.Titles.CPUThreads + ": ") +  xterm256.Sprint(info, fmt.Sprint(cpu.TotalThreads)))
-		}
-	}
-	if (config.ShowProcessCount){
-		pids, err := ps.Pids()
-
-		if err != nil {
-			log.Fatal("Couldn't get Processes!")
-		}
-
-		s = append(s, xterm256.Sprint(title, "Proccesses Running: ") + xterm256.Sprint(info, int64(len(pids))))
-	}
-	if (config.ShowWindowsVersion){
-		k, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows NT\CurrentVersion`, registry.QUERY_VALUE)
-	
-		pn, _, err := k.GetStringValue("ProductName")
-		if err != nil {
-			log.Fatal(err)
-		}
-		s = append(s, xterm256.Sprint(title, config.Titles.WindowsVersion + ": ") + xterm256.Sprint(info, pn))
-	}
-	if (config.ShowTotalDiskSize){
-		bi, err := ghw.Block()
-		if err != nil {
-			fmt.Printf("Error getting disk info: %v", err)
-		}
-		s = append(s, xterm256.Sprint(title, config.Titles.DiskSize + ": ") +  xterm256.Sprint(info, ByteFormat(float64(bi.TotalPhysicalBytes), 1)))
-	}
-	if (config.ShowGPUS){
-		gpu, err := ghw.GPU()
-		if err != nil {
-			fmt.Printf("Error getting GPU info: %v", err)
-		}
-		gpuin := 0
-		for _, c := range gpu.GraphicsCards {
-			s = append(s, xterm256.Sprint(title, config.Titles.GPUs + fmt.Sprint(gpuin) + ": ") +  xterm256.Sprint(info, c.DeviceInfo.Product.Name))
-			gpuin++
-		}
-	}
-	if (config.ShowBios){
-		bios, err := ghw.BIOS()
-		if err != nil {
-			fmt.Printf("Error getting BIOS info: %v", err)
-		}
-		s = append(s, xterm256.Sprint(title, config.Titles.Bios + ": ") +  xterm256.Sprint(info, bios.Vendor))
-	}
-	if (config.ShowBaseboard){
-		bb, err := ghw.Baseboard()
-		if err != nil {
-			fmt.Printf("Error getting BB info: %v", err)
-		}
-		s = append(s, xterm256.Sprint(title, config.Titles.Baseboard + ": ")  + xterm256.Sprint(info, bb.Vendor))
-	}
-	s = append(s, "")
-	s = append(s, "    " + xterm256.Sprint(xterm256.LightGray, "███") + xterm256.Sprint(xterm256.Red, "███") + xterm256.Sprint(xterm256.Green, "███") + xterm256.Sprint(xterm256.Yellow, "███") + xterm256.Sprint(xterm256.Blue, "███") + xterm256.Sprint(xterm256.Magenta, "███") + xterm256.Sprint(xterm256.Cyan, "███"))
-	s = append(s, "    " + xterm256.Sprint(xterm256.DarkGray, "███") + xterm256.Sprint(xterm256.DarkRed, "███") + xterm256.Sprint(xterm256.DarkGreen, "███") + xterm256.Sprint(xterm256.DarkYellow, "███") + xterm256.Sprint(xterm256.DarkBlue, "███") + xterm256.Sprint(xterm256.DarkMagenta, "███") + xterm256.Sprint(xterm256.DarkCyan, "███"))
+	s = generateInfo(config, title, info, userc, sep)
 	scanner := bufio.NewScanner(strings.NewReader(""))
 	if (config.UseSmallAscii){
 		scanner = bufio.NewScanner(strings.NewReader(winArtSmall))

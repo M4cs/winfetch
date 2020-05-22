@@ -1,6 +1,7 @@
 package main
 
 type Config struct {
+	Format []string `json:"format"`
 	ShowUser bool `json:"showUser"`
 	ShowSep bool `json:"showSep"`
 	ShowUptime bool `json:"showUptime"`
@@ -43,6 +44,7 @@ type TitleValues struct {
 
 func newConfig() Config {
 	config := Config{}
+	config.Format = []string{"user", "sep", "uptime", "mem", "cpu", "procs", "cpuCores", "cpuThreads", "disk", "wversion", "gpus", "bios", "baseboard"}
 	config.ShowUser = true
 	config.ShowUptime = true
 	config.ShowSep = true
