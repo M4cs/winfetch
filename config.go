@@ -2,19 +2,6 @@ package main
 
 type Config struct {
 	Format []string `json:"format"`
-	ShowUser bool `json:"showUser"`
-	ShowSep bool `json:"showSep"`
-	ShowUptime bool `json:"showUptime"`
-	ShowMem bool `json:"showMem"`
-	ShowCPU bool `json:"showCPU"`
-	ShowTotalCPUCores bool `json:"showTotalCPUCores"`
-	ShowTotalCPUThreads bool `json:"showTotalCPUThreads"`
-	ShowGPUS bool `json:"showGPUS"`
-	ShowTotalDiskSize bool `json:"showTotalDiskSize"`
-	ShowWindowsVersion bool `json:"showWindowsVersion"`
-	ShowBios bool `json:"showBios"`
-	ShowBaseboard bool `json:"showBaseboard"`
-	ShowProcessCount bool `json:"showProcessCount"`
 	ShowAscii bool `json:"showAscii"`
 	UseDefaultColors bool `json:"useDefaultColors"`
 	UseSmallAscii bool `json:"useSmallAscii"`
@@ -45,20 +32,7 @@ type TitleValues struct {
 func newConfig() Config {
 	config := Config{}
 	config.Format = []string{"user", "sep", "uptime", "mem", "cpu", "procs", "cpuCores", "cpuThreads", "disk", "wversion", "gpus", "bios", "baseboard"}
-	config.ShowUser = true
-	config.ShowUptime = true
-	config.ShowSep = true
-	config.ShowMem = true
-	config.ShowCPU = true
-	config.ShowTotalCPUCores = true
-	config.ShowTotalCPUThreads = true
-	config.ShowGPUS = true
-	config.ShowTotalDiskSize = true
-	config.ShowWindowsVersion = true
-	config.ShowBios = true
-	config.ShowBaseboard = true
 	config.ShowAscii = true
-	config.ShowProcessCount = true
 	config.UseSmallAscii = false
 	config.UseCustomAscii = false
 	config.CustomAsciiPath = ""

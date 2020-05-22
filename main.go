@@ -151,28 +151,34 @@ llllllllllll  lllllllllllllllll
 		info = getCustomColor(config.InfoColor)
 	}
 	s = generateInfo(config, title, info, userc, sep)
-	scanner := bufio.NewScanner(strings.NewReader(""))
-	if (config.UseSmallAscii){
-		scanner = bufio.NewScanner(strings.NewReader(winArtSmall))
+	if (config.ShowAscii){
+		scanner := bufio.NewScanner(strings.NewReader(""))
+		if (config.UseSmallAscii){
+			scanner = bufio.NewScanner(strings.NewReader(winArtSmall))
+		} else {
+			scanner = bufio.NewScanner(strings.NewReader(winArt))
+		}
+		if (config.UseCustomAscii){
+			content, err := ioutil.ReadFile(config.CustomAsciiPath)
+			if (err != nil) {
+				log.Fatal(err)
+			}
+			text := string(content)
+			scanner = bufio.NewScanner(strings.NewReader(text))
+		}
+		index := 0
+		for i, str := range s {
+			fmt.Println(xterm256.Sprint(ascii, winArtResult[i]) + "    " + str)
+		}
+		for scanner.Scan() {
+			if index >= len(s) {
+				fmt.Println(xterm256.Sprint(ascii, scanner.Text()))
+			}
+			index++
+		}
 	} else {
-		scanner = bufio.NewScanner(strings.NewReader(winArt))
-	}
-	if (config.UseCustomAscii){
-		content, err := ioutil.ReadFile(config.CustomAsciiPath)
-		if (err != nil) {
-			log.Fatal(err)
+		for _, str := range s {
+			fmt.Println(str)
 		}
-		text := string(content)
-		scanner = bufio.NewScanner(strings.NewReader(text))
-	}
-	index := 0
-	for i, str := range s {
-		fmt.Println(xterm256.Sprint(ascii, winArtResult[i]) + "    " + str)
-	}
-	for scanner.Scan() {
-		if index >= len(s) {
-			fmt.Println(xterm256.Sprint(ascii, scanner.Text()))
-		}
-		index++
 	}
 }
