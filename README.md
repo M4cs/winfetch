@@ -13,8 +13,7 @@ Winfetch is still extremely early in development. The configuration is minimal a
 
 #### Planned Features:
 
-- Customize Titles
-- Customize Colors
+- Load Custom ASCII Art
 - Scaling To Terminal Size
 - Display Images (Does Windows Terminal even support this??)
 
@@ -52,6 +51,8 @@ The default config is as follows:
 
 ```json
 {
+ "showUser": true,
+ "showSep": true,
  "showMem": true,
  "showTotalCPUCores": true,
  "showTotalCPUThreads": true,
@@ -60,18 +61,32 @@ The default config is as follows:
  "showWindowsVersion": true,
  "showBios": true,
  "showBaseboard": true,
- "showAscii": true
+ "showAscii": true,
+ "useDefaultColors": true,
+ "asciiValue": "Blue",
+ "userColor": "Red",
+ "sepColor": "Red",
+ "titleColor": "Green",
+ "infoColor": "White",
+ "titles": {
+  "memory": "Memory",
+  "cpuCores": "CPU Cores",
+  "cpuThreads": "CPU Threads",
+  "gpus": "GPU #",
+  "diskSize": "Disk Size",
+  "windowsVersion": "Windows Ver.",
+  "bios": "BIOS",
+  "baseboard": "Baseboard"
+ }
 }
 ```
-
-Currently you can only decide what to display in the Winfetch prompt.
 
 
 ## Dependencies
 
 [ghw](https://github.com/jaypipes/ghw) - Hardware/System Information
 
-[fatih/color](https://github.com/fatih/color) - Color Printing To Terminal
+[xterm-256](https://github.com/gilliek/go-xterm256) - Color Printing To Terminal
 
 [neofetch](https://github.com/dylanaraps/neofetch) - Inspiration and Ascii Art
 
