@@ -13,7 +13,7 @@ type Config struct {
 	ShowBaseboard bool `json:"showBaseboard"`
 	ShowAscii bool `json:"showAscii"`
 	UseDefaultColors bool `json:"useDefaultColors"`
-	AsciiColor string `json:"asciiValue"`
+	AsciiColor string `json:"asciiColor"`
 	UserColor string `json:"userColor"`
 	SepColor string `json:"sepColor"`
 	TitleColor string `json:"titleColor"`
