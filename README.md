@@ -11,7 +11,7 @@
 
 
 ### Overview
-Winfetch is still extremely early in development. The configuration is minimal and there is little to no customization for titles until I add them! This is my first Go program and I have only known it as of last night (when creating this repository).
+Winfetch is an alternative program for neofetch/screenfetch made for Windows! It allows you to display system information through your command line without needing to have any hacky bash fixes to run neofetch. It's also faster!
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.png" align="center" height="270px">
