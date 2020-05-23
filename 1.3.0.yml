@@ -1,0 +1,14 @@
+Id: com.maxbridgland.winfetch
+Publisher: Max Bridgland
+Name: winfetch
+Version: 1.3.0
+AppMoniker: winfetch
+MinOsVersion: 10.0.0.0
+Description: System Information Tool for the Command Line
+Homepage: https://github.com/M4cs/winfetch
+License: Copyright (c) Max Bridgland. All Rights Reserved
+InstallerType: exe
+Installers:
+  - Arch: x64
+    Url: https://github.com/M4cs/winfetch/blob/master/build/Winfetch-Installer.exe
+    Sha256: D7C9CDD4EE32272846199A17E97C881D85FA145840534AF6A58C79142C2B7FB4
