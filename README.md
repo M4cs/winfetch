@@ -20,6 +20,45 @@ For More information and detailed instructions on configuration and installation
     <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview1.png" align="center" height="270px">
 </p>
 
+## Installation
+
+### Downloading Binary/Installer
+
+You can find the Binary and Installer in the [Releases Section](https://github.com/M4cs/winfetch/releases). If you download the installer it will install `winfetch.exe` to whichever path you specify, the default is `C:\
+Program Files\winfetch\winfetch.exe`. 
+
+If you download the binary alone in `.zip` format you can unzip and extract it to somewhere inside your `$PATH`. 
+
+**Make sure wherever you install `winfetch` to is inside your $PATH! For more info refer [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+
+<hr>
+
+### Using `go get`
+
+To install from go simply run:
+
+```
+go get github.com/M4cs/winfetch
+```
+
+<hr>
+
+### Building From Source
+
+Clone the repository:
+
+```
+git clone https://github.com/M4cs/winfetch.git
+```
+
+Run the following commands:
+
+```
+cd winfetch
+go build
+./winfetch.exe # This will be built inside the winfetch/ directory
+```
+
 ## Dependencies
 
 [ghw](https://github.com/jaypipes/ghw) - Hardware/System Information
