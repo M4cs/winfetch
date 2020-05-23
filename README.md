@@ -52,16 +52,21 @@ The default config is as follows:
 
 ```json
 {
- "showUser": true,
- "showSep": true,
- "showMem": true,
- "showTotalCPUCores": true,
- "showTotalCPUThreads": true,
- "showGPUS": true,
- "showTotalDiskSize": true,
- "showWindowsVersion": true,
- "showBios": true,
- "showBaseboard": true,
+ "format": [
+  "user",
+  "sep",
+  "uptime",
+  "mem",
+  "cpu",
+  "cpuCores",
+  "cpuThreads",
+  "procs",
+  "disk",
+  "wversion",
+  "gpus",
+  "bios",
+  "baseboard"
+ ],
  "showAscii": true,
  "useDefaultColors": true,
  "useSmallAscii": false,
@@ -74,17 +79,21 @@ The default config is as follows:
  "infoColor": "White",
  "titles": {
   "memory": "Memory",
+  "cpu": "CPU #",
   "cpuCores": "CPU Cores",
   "cpuThreads": "CPU Threads",
   "gpus": "GPU #",
   "diskSize": "Disk Size",
   "windowsVersion": "Windows Ver.",
   "bios": "BIOS",
-  "baseboard": "Baseboard"
+  "baseboard": "Baseboard",
+  "processCount": "Processes",
+  "uptime": "Uptime"
  }
 }
 ```
 
+The formatting is order specific, each module will display based on it's place in the array. **All modules are displayed above and by default when you first install winfetch**
 
 ## Dependencies
 
