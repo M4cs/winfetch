@@ -104,3 +104,8 @@ The formatting is order specific, each module will display based on it's place i
 [neofetch](https://github.com/dylanaraps/neofetch) - Inspiration and Ascii Art
 
 
+## Contribution
+
+Any contributions are welcome! I'm sure the code is ugly as hell since this is really my first Go program but anybody who would like to help out is greatly appreciated! Feel free to Open a PR and Issue with any feedback/suggestions for improvements or features in Winfetch.
+
+
