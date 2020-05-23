@@ -29,7 +29,7 @@ Program Files\winfetch\winfetch.exe`.
 
 If you download the binary alone in `.zip` format you can unzip and extract it to somewhere inside your `$PATH`. 
 
-**Make sure wherever you install `winfetch` to is inside your $PATH! For more info refer [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+**Make sure wherever you install `winfetch` to is inside your $PATH! For more info refer [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)**
 
 <hr>
 
