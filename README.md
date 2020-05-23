@@ -13,93 +13,12 @@
 ### Overview
 Winfetch is an alternative program for neofetch/screenfetch made for Windows! It allows you to display system information through your command line without needing to have any hacky bash fixes to run neofetch. It's also faster!
 
+For More information and detailed instructions on configuration and installation read the [Wiki here](https://github.com/M4cs/winfetch/wiki)
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.png" align="center" height="270px">
     <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview1.png" align="center" height="270px">
 </p>
-
-### Installation
-
-#### Using Prebuilt Binary
-
-Download from the releases tab [here](https://github.com/M4cs/winfetch/releases)
-
-Place this file somewhere inside your $PATH
-
-#### Using `go get`
-
-First install [Go](https://golang.org/)
-
-Then use `go get` from the command line to install:
-
-```
-go get github.com/M4cs/winfetch
-```
-
-Now you can run `winfetch` to get your system information to display!
-
-#### Building From Source
-
-Make sure you have Go installed then run:
-
-```
-git clone https://github.com/M4cs/winfetch
-cd winfetch
-go build
-```
-
-You will now have a `winfetch.exe` file in your directory!
-
-## Configuration
-
-There isn't much to the config at the moment but you can find it at `.winfetch.json` in your Home folder.
-
-The default config is as follows:
-
-```json
-{
- "format": [
-  "user",
-  "sep",
-  "uptime",
-  "mem",
-  "cpu",
-  "cpuCores",
-  "cpuThreads",
-  "procs",
-  "disk",
-  "wversion",
-  "gpus",
-  "bios",
-  "baseboard"
- ],
- "showAscii": true,
- "useDefaultColors": true,
- "useSmallAscii": false,
- "asciiColor": "Blue",
- "useCustomAscii": false,
- "customAsciiPath": "",
- "userColor": "Red",
- "sepColor": "Red",
- "titleColor": "Green",
- "infoColor": "White",
- "titles": {
-  "memory": "Memory",
-  "cpu": "CPU #",
-  "cpuCores": "CPU Cores",
-  "cpuThreads": "CPU Threads",
-  "gpus": "GPU #",
-  "diskSize": "Disk Size",
-  "windowsVersion": "Windows Ver.",
-  "bios": "BIOS",
-  "baseboard": "Baseboard",
-  "processCount": "Processes",
-  "uptime": "Uptime"
- }
-}
-```
-
-The formatting is order specific, each module will display based on it's place in the array. **All modules are displayed above and by default when you first install winfetch**
 
 ## Dependencies
 
