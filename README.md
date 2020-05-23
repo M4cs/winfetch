@@ -20,6 +20,12 @@ Winfetch is still extremely early in development. The configuration is minimal a
 
 ### Installation
 
+#### Using Prebuilt Binary
+
+Download from the releases tab [here](https://github.com/M4cs/winfetch/releases)
+
+Place this file somewhere inside your $PATH
+
 #### Using `go get`
 
 First install [Go](https://golang.org/)
