@@ -74,39 +74,38 @@ func getCustomColor(color string) xterm256.Color {
 
 func main() {
 	var s []string
-	var winArt string = `                                ..,
-                    ....,,:;+ccllll
-      ...,,+:;  cllllllllllllllllll
-,cclllllllllll  lllllllllllllllllll
-llllllllllllll  lllllllllllllllllll
-llllllllllllll  lllllllllllllllllll
-llllllllllllll  lllllllllllllllllll
-llllllllllllll  lllllllllllllllllll
-llllllllllllll  lllllllllllllllllll
-                                   
-llllllllllllll  lllllllllllllllllll
-llllllllllllll  lllllllllllllllllll
-llllllllllllll  lllllllllllllllllll
-llllllllllllll  lllllllllllllllllll
-llllllllllllll  lllllllllllllllllll
- 'ccllllllllll  lllllllllllllllllll
-       ' \\*::  :ccllllllllllllllll
-                   ''''''''''*::cll
-                               ''''`
-	var winArtSmall string = `                              .
-                  ....,,:;+ccll
-      ..,+:;  cllllllllllllllll
-,cclllllllll  lllllllllllllllll
-llllllllllll  lllllllllllllllll
-llllllllllll  lllllllllllllllll
-llllllllllll  lllllllllllllllll
-                               
-llllllllllll  lllllllllllllllll
-llllllllllll  lllllllllllllllll
-llllllllllll  lllllllllllllllll
- 'ccllllllll  lllllllllllllllll
-     ' \\*::  :ccllllllllllllll
-				 ''''''''''*::;`
+	var winArt string = `                         ....::::
+                 ....::::::::::::
+        ....:::: ::::::::::::::::
+....:::::::::::: ::::::::::::::::
+:::::::::::::::: ::::::::::::::::
+:::::::::::::::: ::::::::::::::::
+:::::::::::::::: ::::::::::::::::
+:::::::::::::::: ::::::::::::::::
+................ ................
+:::::::::::::::: ::::::::::::::::
+:::::::::::::::: ::::::::::::::::
+:::::::::::::::: ::::::::::::::::
+'''':::::::::::: ::::::::::::::::
+        '''':::: ::::::::::::::::
+                 ''''::::::::::::
+                         ''''::::`
+	var winArtSmall string = `                       ...:::
+               ....::::::::::
+        ...::: ::::::::::::::
+...::::::::::: ::::::::::::::
+:::::::::::::: ::::::::::::::
+:::::::::::::: ::::::::::::::
+:::::::::::::: ::::::::::::::
+.............. ..............
+:::::::::::::: ::::::::::::::
+:::::::::::::: ::::::::::::::
+:::::::::::::: ::::::::::::::
+:::::::::::::: ::::::::::::::
+'''':::::::::: ::::::::::::::
+        '''::: ::::::::::::::
+                 ''::::::::::
+                     ''''::::`
 	user, err := user.Current()
 	if _, err := os.Stat(user.HomeDir + "\\.winfetch.json"); os.IsNotExist(err) {
 		config := newConfig()
