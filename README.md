@@ -11,95 +11,53 @@
 
 
 ### Overview
-Winfetch is still extremely early in development. The configuration is minimal and there is little to no customization for titles until I add them! This is my first Go program and I have only known it as of last night (when creating this repository).
+Winfetch is an alternative program for neofetch/screenfetch made for Windows! It allows you to display system information through your command line without needing to have any hacky bash fixes to run neofetch. It's also faster!
+
+For More information and detailed instructions on configuration and installation read the [Wiki here](https://github.com/M4cs/winfetch/wiki)
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview.png" align="center" height="270px">
     <img src="https://raw.githubusercontent.com/M4cs/winfetch/master/gitimages/preview1.png" align="center" height="270px">
 </p>
 
-### Installation
+## Installation
 
-#### Using Prebuilt Binary
+### Downloading Binary/Installer
 
-Download from the releases tab [here](https://github.com/M4cs/winfetch/releases)
+You can find the Binary and Installer in the [Releases Section](https://github.com/M4cs/winfetch/releases). If you download the installer it will install `winfetch.exe` to whichever path you specify, the default is `C:\
+Program Files\winfetch\winfetch.exe`. 
 
-Place this file somewhere inside your $PATH
+If you download the binary alone in `.zip` format you can unzip and extract it to somewhere inside your `$PATH`. 
 
-#### Using `go get`
+**Make sure wherever you install `winfetch` to is inside your $PATH! For more info refer [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)**
 
-First install [Go](https://golang.org/)
+<hr>
 
-Then use `go get` from the command line to install:
+### Using `go get`
+
+To install from go simply run:
 
 ```
 go get github.com/M4cs/winfetch
 ```
 
-Now you can run `winfetch` to get your system information to display!
+<hr>
 
-#### Building From Source
+### Building From Source
 
-Make sure you have Go installed then run:
+Clone the repository:
 
 ```
-git clone https://github.com/M4cs/winfetch
+git clone https://github.com/M4cs/winfetch.git
+```
+
+Run the following commands:
+
+```
 cd winfetch
 go build
+./winfetch.exe # This will be built inside the winfetch/ directory
 ```
-
-You will now have a `winfetch.exe` file in your directory!
-
-## Configuration
-
-There isn't much to the config at the moment but you can find it at `.winfetch.json` in your Home folder.
-
-The default config is as follows:
-
-```json
-{
- "format": [
-  "user",
-  "sep",
-  "uptime",
-  "mem",
-  "cpu",
-  "cpuCores",
-  "cpuThreads",
-  "procs",
-  "disk",
-  "wversion",
-  "gpus",
-  "bios",
-  "baseboard"
- ],
- "showAscii": true,
- "useDefaultColors": true,
- "useSmallAscii": false,
- "asciiColor": "Blue",
- "useCustomAscii": false,
- "customAsciiPath": "",
- "userColor": "Red",
- "sepColor": "Red",
- "titleColor": "Green",
- "infoColor": "White",
- "titles": {
-  "memory": "Memory",
-  "cpu": "CPU #",
-  "cpuCores": "CPU Cores",
-  "cpuThreads": "CPU Threads",
-  "gpus": "GPU #",
-  "diskSize": "Disk Size",
-  "windowsVersion": "Windows Ver.",
-  "bios": "BIOS",
-  "baseboard": "Baseboard",
-  "processCount": "Processes",
-  "uptime": "Uptime"
- }
-}
-```
-
-The formatting is order specific, each module will display based on it's place in the array. **All modules are displayed above and by default when you first install winfetch**
 
 ## Dependencies
 
