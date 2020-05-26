@@ -6,6 +6,7 @@ import (
 	"strings"
 	"bufio"
 	"os/user"
+	"unicode/utf8"
 	"os"
 	"encoding/json"
 	"io/ioutil"
@@ -167,7 +168,11 @@ func main() {
 		}
 		index := 0
 		for i, str := range s {
-			fmt.Println(xterm256.Sprint(ascii, winArtResult[i]) + "    " + str)
+			if len(winArtResult) - 1 < i {
+				fmt.Println(strings.Repeat(" ", utf8.RuneCountInString(winArtResult[0])) + "    " + str)
+			} else {
+				fmt.Println(xterm256.Sprint(ascii, winArtResult[i]) + "    " + str)
+			}
 		}
 		for scanner.Scan() {
 			if index >= len(s) {
