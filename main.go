@@ -10,6 +10,7 @@ import (
 	"os"
 	"encoding/json"
 	"io/ioutil"
+	"net/http"
 	"github.com/gilliek/go-xterm256/xterm256"
 )
 
@@ -74,6 +75,21 @@ func getCustomColor(color string) xterm256.Color {
 }
 
 func main() {
+	version := "1.4.1"
+	args := os.Args[1:]
+	_, update := Find(args, "-u")
+	if update {
+		resp, err := http.Get("https://raw.githubusercontent.com/M4cs/winfetch/master/version")
+		if err != nil {
+			fmt.Println("Couldn't check for upate. Are you connected to the internet?")
+		}
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+		if string(body) != version {
+			fmt.Println("Update Available! Your Version: " + version + " Recent Version: " + string(body))
+		}
+	}
+	_, configA := Find(args, "-c")
 	var s []string
 	var winArt string = `                         ....::::
                  ....::::::::::::
@@ -107,7 +123,7 @@ func main() {
         '''::: ::::::::::::::
                  ''::::::::::
                      ''''::::`
-	user, err := user.Current()
+	user, _ := user.Current()
 	if _, err := os.Stat(user.HomeDir + "\\.winfetch.json"); os.IsNotExist(err) {
 		config := newConfig()
 		file, _ := json.MarshalIndent(config, "", " ")
@@ -115,13 +131,29 @@ func main() {
 		fmt.Println("No Config File Found! This must be the first time running! Creating Config at: " + user.HomeDir + "\\.winfetch.json")
 	}
 	config := Config{}
-	configFile, err := os.Open(user.HomeDir + "\\.winfetch.json")
-	if err != nil {
-		log.Fatal("Error Opening Config File", err.Error())
-	}
-	jsonParser := json.NewDecoder(configFile)
-	if err = jsonParser.Decode(&config); err != nil{
-		log.Fatal("Error Parsing Config File: ", err.Error())
+	if configA {
+		pathIndex := indexOf("-c", args) + 1
+		filePath := args[pathIndex]
+		configFile, err := os.Open(filePath)
+		if err != nil {
+			log.Fatal("Error Opening Config File", err.Error())
+		}
+		jsonParser := json.NewDecoder(configFile)
+		if err = jsonParser.Decode(&config); err != nil{
+			log.Fatal("Error Parsing Config File: ", err.Error())
+		}
+	} else {
+		configFile, err := os.Open(user.HomeDir + "\\.winfetch.json")
+		if err != nil {
+			log.Fatal("Error Opening Config File", err.Error())
+		}
+		jsonParser := json.NewDecoder(configFile)
+		if err = jsonParser.Decode(&config); err != nil{
+			log.Fatal("Error Parsing Config File: ", err.Error())
+		}
+		if config.Version != 1 {
+			updateConfig(config)
+		}
 	}
 	var winArtResult []string
 	if (config.UseSmallAscii){

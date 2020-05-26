@@ -16,6 +16,26 @@ import (
 	"github.com/gilliek/go-xterm256/xterm256"
 )
 
+
+
+func indexOf(element string, data []string) (int) {
+   for k, v := range data {
+       if element == v {
+           return k
+       }
+   }
+   return -1    //not found.
+}
+
+func Find(slice []string, val string) (int, bool) {
+    for i, item := range slice {
+        if item == val {
+            return i, true
+        }
+    }
+    return -1, false
+}
+
 func RoundUp(input float64, places int) (newVal float64) {
 	var round float64
 	pow := math.Pow(10, float64(places))
