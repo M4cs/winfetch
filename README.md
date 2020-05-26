@@ -33,7 +33,7 @@ If you download the binary alone in `.zip` format you can unzip and extract it t
 
 <hr>
 
-### Using `go get`
+### Using `go get` (Recommended Method)
 
 To install from go simply run:
 
