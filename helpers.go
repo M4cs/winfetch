@@ -1,39 +1,37 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"math"
+	"os/user"
 	"strconv"
 	"strings"
-	"os/user"
-	"log"
-	"fmt"
 
-	ps "github.com/shirou/gopsutil/process"
 	hst "github.com/shirou/gopsutil/host"
+	ps "github.com/shirou/gopsutil/process"
 	// cp "github.com/shirou/gopsutil/cpu"
+	"github.com/gilliek/go-xterm256/xterm256"
 	"github.com/jaypipes/ghw"
 	"golang.org/x/sys/windows/registry"
-	"github.com/gilliek/go-xterm256/xterm256"
 )
 
-
-
-func indexOf(element string, data []string) (int) {
-   for k, v := range data {
-       if element == v {
-           return k
-       }
-   }
-   return -1    //not found.
+func indexOf(element string, data []string) int {
+	for k, v := range data {
+		if element == v {
+			return k
+		}
+	}
+	return -1 //not found.
 }
 
 func Find(slice []string, val string) (int, bool) {
-    for i, item := range slice {
-        if item == val {
-            return i, true
-        }
-    }
-    return -1, false
+	for i, item := range slice {
+		if item == val {
+			return i, true
+		}
+	}
+	return -1, false
 }
 
 func RoundUp(input float64, places int) (newVal float64) {
@@ -48,39 +46,39 @@ func RoundUp(input float64, places int) (newVal float64) {
 func ByteFormat(inputNum float64, precision int) string {
 
 	if precision <= 0 {
-			precision = 1
+		precision = 1
 	}
 
 	var unit string
 	var returnVal float64
 
 	if inputNum >= 1000000000000000000000000 {
-			returnVal = RoundUp((inputNum / 1208925819614629174706176), precision)
-			unit = " YB" // yottabyte
+		returnVal = RoundUp((inputNum / 1208925819614629174706176), precision)
+		unit = " YB" // yottabyte
 	} else if inputNum >= 1000000000000000000000 {
-			returnVal = RoundUp((inputNum / 1180591620717411303424), precision)
-			unit = " ZB" // zettabyte
+		returnVal = RoundUp((inputNum / 1180591620717411303424), precision)
+		unit = " ZB" // zettabyte
 	} else if inputNum >= 10000000000000000000 {
-			returnVal = RoundUp((inputNum / 1152921504606846976), precision)
-			unit = " EB" // exabyte
+		returnVal = RoundUp((inputNum / 1152921504606846976), precision)
+		unit = " EB" // exabyte
 	} else if inputNum >= 1000000000000000 {
-			returnVal = RoundUp((inputNum / 1125899906842624), precision)
-			unit = " PB" // petabyte
+		returnVal = RoundUp((inputNum / 1125899906842624), precision)
+		unit = " PB" // petabyte
 	} else if inputNum >= 1000000000000 {
-			returnVal = RoundUp((inputNum / 1099511627776), precision)
-			unit = " TB" // terrabyte
+		returnVal = RoundUp((inputNum / 1099511627776), precision)
+		unit = " TB" // terrabyte
 	} else if inputNum >= 1000000000 {
-			returnVal = RoundUp((inputNum / 1073741824), precision)
-			unit = " GB" // gigabyte
+		returnVal = RoundUp((inputNum / 1073741824), precision)
+		unit = " GB" // gigabyte
 	} else if inputNum >= 1000000 {
-			returnVal = RoundUp((inputNum / 1048576), precision)
-			unit = " MB" // megabyte
+		returnVal = RoundUp((inputNum / 1048576), precision)
+		unit = " MB" // megabyte
 	} else if inputNum >= 1000 {
-			returnVal = RoundUp((inputNum / 1024), precision)
-			unit = " KB" // kilobyte
+		returnVal = RoundUp((inputNum / 1024), precision)
+		unit = " KB" // kilobyte
 	} else {
-			returnVal = inputNum
-			unit = " bytes" // byte
+		returnVal = inputNum
+		unit = " bytes" // byte
 	}
 
 	return strconv.FormatFloat(returnVal, 'f', precision, 64) + unit
@@ -89,9 +87,9 @@ func ByteFormat(inputNum float64, precision int) string {
 
 func plural(count int, singular string) (result string) {
 	if (count == 1) || (count == 0) {
-			result = strconv.Itoa(count) + " " + singular + " "
+		result = strconv.Itoa(count) + " " + singular + " "
 	} else {
-			result = strconv.Itoa(count) + " " + singular + "s "
+		result = strconv.Itoa(count) + " " + singular + "s "
 	}
 	return
 }
@@ -111,19 +109,19 @@ func secondsToHuman(input int) (result string) {
 	seconds = input % 60
 
 	if years > 0 {
-			result = plural(int(years), "year") + plural(int(months), "month") + plural(int(weeks), "week") + plural(int(days), "day") + plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
+		result = plural(int(years), "year") + plural(int(months), "month") + plural(int(weeks), "week") + plural(int(days), "day") + plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
 	} else if months > 0 {
-			result = plural(int(months), "month") + plural(int(weeks), "week") + plural(int(days), "day") + plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
+		result = plural(int(months), "month") + plural(int(weeks), "week") + plural(int(days), "day") + plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
 	} else if weeks > 0 {
-			result = plural(int(weeks), "week") + plural(int(days), "day") + plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
+		result = plural(int(weeks), "week") + plural(int(days), "day") + plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
 	} else if days > 0 {
-			result = plural(int(days), "day") + plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
+		result = plural(int(days), "day") + plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
 	} else if hours > 0 {
-			result = plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
+		result = plural(int(hours), "hour") + plural(int(minutes), "minute") + plural(int(seconds), "second")
 	} else if minutes > 0 {
-			result = plural(int(minutes), "minute") + plural(int(seconds), "second")
+		result = plural(int(minutes), "minute") + plural(int(seconds), "second")
 	} else {
-			result = plural(int(seconds), "second")
+		result = plural(int(seconds), "second")
 	}
 
 	return
@@ -142,11 +140,11 @@ func generateInfo(config Config, title xterm256.Color, info xterm256.Color, user
 			s = append(s, xterm256.Sprint(userc, strings.ReplaceAll(user.Username, "\\", "@")))
 		case "uptime":
 			uptime, err := hst.Uptime()
-			if (err != nil) {
+			if err != nil {
 				log.Fatal("Failed to Get Uptime!")
 			}
 			uptimes := secondsToHuman(int(uptime))
-			s = append(s, xterm256.Sprint(title, config.Titles.Uptime + ": ") + xterm256.Sprint(info, uptimes))
+			s = append(s, xterm256.Sprint(title, config.Titles.Uptime+": ")+xterm256.Sprint(info, uptimes))
 		case "sep":
 			s = append(s, xterm256.Sprint(sep, "--------------------------------"))
 		case "mem":
@@ -158,15 +156,15 @@ func generateInfo(config Config, title xterm256.Color, info xterm256.Color, user
 			mem := strings.Split(memorySplit[1], ",")
 			usableMem := strings.Split(mem[1], "usable")
 			physMem := strings.Split(mem[0], "physical")
-			s = append(s, xterm256.Sprint(title, config.Titles.Memory + ": ") + xterm256.Sprint(info, strings.ReplaceAll(usableMem[0], "MB ", "GB") + "/" + strings.ReplaceAll(physMem[0], "MB", "GB")))	
+			s = append(s, xterm256.Sprint(title, config.Titles.Memory+": ")+xterm256.Sprint(info, strings.ReplaceAll(usableMem[0], "MB ", "GB")+"/"+strings.ReplaceAll(physMem[0], "MB", "GB")))
 		case "cpuThreads":
-			s = append(s, xterm256.Sprint(title, config.Titles.CPUThreads + ": ") +  xterm256.Sprint(info, fmt.Sprint(cpu.TotalThreads)))
+			s = append(s, xterm256.Sprint(title, config.Titles.CPUThreads+": ")+xterm256.Sprint(info, fmt.Sprint(cpu.TotalThreads)))
 		case "cpuCores":
-			s = append(s, xterm256.Sprint(title, config.Titles.CPUCores + ": ") +   xterm256.Sprint(info, fmt.Sprint(cpu.TotalCores)))
+			s = append(s, xterm256.Sprint(title, config.Titles.CPUCores+": ")+xterm256.Sprint(info, fmt.Sprint(cpu.TotalCores)))
 		case "cpu":
 			in := 0
 			for x := range cpu.Processors {
-				s = append(s, xterm256.Sprint(title, "CPU #" + fmt.Sprint(in) + ": ") + xterm256.Sprint(info, cpu.Processors[x].Model))
+				s = append(s, xterm256.Sprint(title, "CPU #"+fmt.Sprint(in)+": ")+xterm256.Sprint(info, cpu.Processors[x].Model))
 			}
 		case "procs":
 			pids, err := ps.Pids()
@@ -175,57 +173,57 @@ func generateInfo(config Config, title xterm256.Color, info xterm256.Color, user
 				log.Fatal("Couldn't get Processes!")
 			}
 
-			s = append(s, xterm256.Sprint(title, "Proccesses Running: ") + xterm256.Sprint(info, int64(len(pids))))
+			s = append(s, xterm256.Sprint(title, "Proccesses Running: ")+xterm256.Sprint(info, int64(len(pids))))
 		case "wversion":
 			k, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows NT\CurrentVersion`, registry.QUERY_VALUE)
-	
+
 			pn, _, err := k.GetStringValue("ProductName")
 			if err != nil {
 				log.Fatal(err)
 			}
-			s = append(s, xterm256.Sprint(title, config.Titles.WindowsVersion + ": ") + xterm256.Sprint(info, pn))
-		
+			s = append(s, xterm256.Sprint(title, config.Titles.WindowsVersion+": ")+xterm256.Sprint(info, pn))
+
 		case "disk":
 			bi, err := ghw.Block()
 			if err != nil {
 				fmt.Printf("Error getting disk info: %v", err)
 			}
-			s = append(s, xterm256.Sprint(title, config.Titles.DiskSize + ": ") +  xterm256.Sprint(info, ByteFormat(float64(bi.TotalPhysicalBytes), 1)))
+			s = append(s, xterm256.Sprint(title, config.Titles.DiskSize+": ")+xterm256.Sprint(info, ByteFormat(float64(bi.TotalPhysicalBytes), 1)))
 		case "gpus":
 			gpu, err := ghw.GPU()
 			if err != nil {
 				fmt.Printf("Error getting GPU info: %v", err)
 			}
 			gpuin := 0
-			if (len(gpu.GraphicsCards) > 1){
+			if len(gpu.GraphicsCards) > 1 {
 				for _, c := range gpu.GraphicsCards {
-					s = append(s, xterm256.Sprint(title, config.Titles.GPUs + " #" + fmt.Sprint(gpuin) + ": ") +  xterm256.Sprint(info, c.DeviceInfo.Product.Name))
+					s = append(s, xterm256.Sprint(title, config.Titles.GPUs+" #"+fmt.Sprint(gpuin)+": ")+xterm256.Sprint(info, c.DeviceInfo.Product.Name))
 					gpuin++
 				}
 			} else {
-				s = append(s, xterm256.Sprint(title, config.Titles.GPUs + ": ") +  xterm256.Sprint(info, gpu.GraphicsCards[0].DeviceInfo.Product.Name))
+				s = append(s, xterm256.Sprint(title, config.Titles.GPUs+": ")+xterm256.Sprint(info, gpu.GraphicsCards[0].DeviceInfo.Product.Name))
 			}
 		case "bios":
 			bios, err := ghw.BIOS()
 			if err != nil {
 				fmt.Printf("Error getting BIOS info: %v", err)
 			}
-			s = append(s, xterm256.Sprint(title, config.Titles.Bios + ": ") +  xterm256.Sprint(info, bios.Vendor))
-		
+			s = append(s, xterm256.Sprint(title, config.Titles.Bios+": ")+xterm256.Sprint(info, bios.Vendor))
+
 		case "baseboard":
 			bb, err := ghw.Baseboard()
 			if err != nil {
 				fmt.Printf("Error getting BB info: %v", err)
 			}
-			s = append(s, xterm256.Sprint(title, config.Titles.Baseboard + ": ")  + xterm256.Sprint(info, bb.Vendor))
-		
+			s = append(s, xterm256.Sprint(title, config.Titles.Baseboard+": ")+xterm256.Sprint(info, bb.Vendor))
+
 		default:
 			s = append(s, "\n")
 		}
-		
+
 	}
 	s = append(s, "")
-	s = append(s, "    " + xterm256.Sprint(xterm256.LightGray, "███") + xterm256.Sprint(xterm256.Red, "███") + xterm256.Sprint(xterm256.Green, "███") + xterm256.Sprint(xterm256.Yellow, "███") + xterm256.Sprint(xterm256.Blue, "███") + xterm256.Sprint(xterm256.Magenta, "███") + xterm256.Sprint(xterm256.Cyan, "███"))
-	s = append(s, "    " + xterm256.Sprint(xterm256.DarkGray, "███") + xterm256.Sprint(xterm256.DarkRed, "███") + xterm256.Sprint(xterm256.DarkGreen, "███") + xterm256.Sprint(xterm256.DarkYellow, "███") + xterm256.Sprint(xterm256.DarkBlue, "███") + xterm256.Sprint(xterm256.DarkMagenta, "███") + xterm256.Sprint(xterm256.DarkCyan, "███"))
+	s = append(s, "    "+xterm256.Sprint(xterm256.LightGray, "███")+xterm256.Sprint(xterm256.Red, "███")+xterm256.Sprint(xterm256.Green, "███")+xterm256.Sprint(xterm256.Yellow, "███")+xterm256.Sprint(xterm256.Blue, "███")+xterm256.Sprint(xterm256.Magenta, "███")+xterm256.Sprint(xterm256.Cyan, "███"))
+	s = append(s, "    "+xterm256.Sprint(xterm256.DarkGray, "███")+xterm256.Sprint(xterm256.DarkRed, "███")+xterm256.Sprint(xterm256.DarkGreen, "███")+xterm256.Sprint(xterm256.DarkYellow, "███")+xterm256.Sprint(xterm256.DarkBlue, "███")+xterm256.Sprint(xterm256.DarkMagenta, "███")+xterm256.Sprint(xterm256.DarkCyan, "███"))
 	return s
 }

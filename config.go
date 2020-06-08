@@ -1,51 +1,50 @@
 package main
 
 import (
-	"os/user"
 	"encoding/json"
 	"io/ioutil"
+	"os/user"
 )
 
-
 type Config struct {
-	Format []string `json:"format"`
-	ShowAscii bool `json:"showAscii"`
-	UseDefaultColors bool `json:"useDefaultColors"`
-	UseSmallAscii bool `json:"useSmallAscii"`
-	AsciiColor string `json:"asciiColor"`
-	UseCustomAscii bool `json:"useCustomAscii"`
-	CustomAsciiPath string `json:"customAsciiPath"`
-	UserColor string `json:"userColor"`
-	SepColor string `json:"sepColor"`
-	TitleColor string `json:"titleColor"`
-	InfoColor string `json:"infoColor"`
-	Titles TitleValues `json:"titles"`
-	AutoUpdate bool `json:"autoupdate"`
-	Version int64 `json:"configVersion"`
+	Format           []string    `json:"format"`
+	ShowAscii        bool        `json:"showAscii"`
+	UseDefaultColors bool        `json:"useDefaultColors"`
+	UseSmallAscii    bool        `json:"useSmallAscii"`
+	AsciiColor       string      `json:"asciiColor"`
+	UseCustomAscii   bool        `json:"useCustomAscii"`
+	CustomAsciiPath  string      `json:"customAsciiPath"`
+	UserColor        string      `json:"userColor"`
+	SepColor         string      `json:"sepColor"`
+	TitleColor       string      `json:"titleColor"`
+	InfoColor        string      `json:"infoColor"`
+	Titles           TitleValues `json:"titles"`
+	AutoUpdate       bool        `json:"autoupdate"`
+	Version          int64       `json:"configVersion"`
 }
 
 type TitleValues struct {
-	Memory string `json:"memory"`
-	CPU string `json:"cpu"`
-	CPUCores string `json:"cpuCores"`
-	CPUThreads string `json:"cpuThreads"`
-	GPUs string `json:"gpus"`
-	DiskSize string `json:"diskSize"`
-	WindowsVersion string `json:"windowsVersion"`		
-	Bios string `json:"bios"`
-	Baseboard string `json:"baseboard"`
-	ProcessCount string `json:"processCount"`
-	Uptime string `json:"uptime"`
+	Memory         string `json:"memory"`
+	CPU            string `json:"cpu"`
+	CPUCores       string `json:"cpuCores"`
+	CPUThreads     string `json:"cpuThreads"`
+	GPUs           string `json:"gpus"`
+	DiskSize       string `json:"diskSize"`
+	WindowsVersion string `json:"windowsVersion"`
+	Bios           string `json:"bios"`
+	Baseboard      string `json:"baseboard"`
+	ProcessCount   string `json:"processCount"`
+	Uptime         string `json:"uptime"`
 }
 
 func updateConfig(config Config) {
 	user, _ := user.Current()
-	if config.Version == 0{
+	if config.Version == 0 {
 		config.AutoUpdate = true
 	}
 	config.Version = 1
 	file, _ := json.MarshalIndent(config, "", " ")
-	_ = ioutil.WriteFile(user.HomeDir + "\\.winfetch.json", file, 0644)
+	_ = ioutil.WriteFile(user.HomeDir+"\\.winfetch.json", file, 0644)
 }
 
 func newConfig() Config {

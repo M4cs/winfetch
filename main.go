@@ -1,17 +1,17 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"strings"
 	"bufio"
-	"os/user"
-	"unicode/utf8"
-	"os"
 	"encoding/json"
-	"io/ioutil"
-	"net/http"
+	"fmt"
 	"github.com/gilliek/go-xterm256/xterm256"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+	"os/user"
+	"strings"
+	"unicode/utf8"
 )
 
 func getCustomColor(color string) xterm256.Color {
@@ -32,7 +32,7 @@ func getCustomColor(color string) xterm256.Color {
 		Magenta     = xterm256.Color{ForegroundColor: 13, BackgroundColor: -1}
 		Cyan        = xterm256.Color{ForegroundColor: 14, BackgroundColor: -1}
 		White       = xterm256.Color{ForegroundColor: 15, BackgroundColor: -1}
-	
+
 		Orange = xterm256.Color{ForegroundColor: 130, BackgroundColor: -1}
 	)
 	switch color {
@@ -127,7 +127,7 @@ func main() {
 	if _, err := os.Stat(user.HomeDir + "\\.winfetch.json"); os.IsNotExist(err) {
 		config := newConfig()
 		file, _ := json.MarshalIndent(config, "", " ")
-		_ = ioutil.WriteFile(user.HomeDir + "\\.winfetch.json", file, 0644)
+		_ = ioutil.WriteFile(user.HomeDir+"\\.winfetch.json", file, 0644)
 		fmt.Println("No Config File Found! This must be the first time running! Creating Config at: " + user.HomeDir + "\\.winfetch.json")
 	}
 	config := Config{}
@@ -139,7 +139,7 @@ func main() {
 			log.Fatal("Error Opening Config File", err.Error())
 		}
 		jsonParser := json.NewDecoder(configFile)
-		if err = jsonParser.Decode(&config); err != nil{
+		if err = jsonParser.Decode(&config); err != nil {
 			log.Fatal("Error Parsing Config File: ", err.Error())
 		}
 	} else {
@@ -148,7 +148,7 @@ func main() {
 			log.Fatal("Error Opening Config File", err.Error())
 		}
 		jsonParser := json.NewDecoder(configFile)
-		if err = jsonParser.Decode(&config); err != nil{
+		if err = jsonParser.Decode(&config); err != nil {
 			log.Fatal("Error Parsing Config File: ", err.Error())
 		}
 		if config.Version != 1 {
@@ -156,12 +156,12 @@ func main() {
 		}
 	}
 	var winArtResult []string
-	if (config.UseSmallAscii){
+	if config.UseSmallAscii {
 		winArtResult = strings.Split(winArtSmall, "\n")
 	} else {
 		winArtResult = strings.Split(winArt, "\n")
 	}
-	if (config.UseCustomAscii){
+	if config.UseCustomAscii {
 		content, err := ioutil.ReadFile(config.CustomAsciiPath)
 		if err != nil {
 			log.Fatal(err)
@@ -175,7 +175,7 @@ func main() {
 	userc := xterm256.Red
 	info := xterm256.White
 
-	if (!config.UseDefaultColors) {
+	if !config.UseDefaultColors {
 		title = getCustomColor(config.TitleColor)
 		ascii = getCustomColor(config.AsciiColor)
 		sep = getCustomColor(config.SepColor)
@@ -183,16 +183,16 @@ func main() {
 		info = getCustomColor(config.InfoColor)
 	}
 	s = generateInfo(config, title, info, userc, sep)
-	if (config.ShowAscii){
+	if config.ShowAscii {
 		scanner := bufio.NewScanner(strings.NewReader(""))
-		if (config.UseSmallAscii){
+		if config.UseSmallAscii {
 			scanner = bufio.NewScanner(strings.NewReader(winArtSmall))
 		} else {
 			scanner = bufio.NewScanner(strings.NewReader(winArt))
 		}
-		if (config.UseCustomAscii){
+		if config.UseCustomAscii {
 			content, err := ioutil.ReadFile(config.CustomAsciiPath)
-			if (err != nil) {
+			if err != nil {
 				log.Fatal(err)
 			}
 			text := string(content)
@@ -200,7 +200,7 @@ func main() {
 		}
 		index := 0
 		for i, str := range s {
-			if len(winArtResult) - 1 < i {
+			if len(winArtResult)-1 < i {
 				fmt.Println(strings.Repeat(" ", utf8.RuneCountInString(winArtResult[0])) + "    " + str)
 			} else {
 				fmt.Println(xterm256.Sprint(ascii, winArtResult[i]) + "    " + str)
