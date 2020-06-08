@@ -85,7 +85,7 @@ func main() {
 			fmt.Println("Couldn't check for upate. Are you connected to the internet?")
 		}
 		defer resp.Body.Close()
-		body, err := ioutil.ReadAll(resp.Body)
+		body, _ := ioutil.ReadAll(resp.Body)
 		if string(body) != version {
 			fmt.Println("Update Available! Your Version: " + version + " Recent Version: " + string(body))
 		}

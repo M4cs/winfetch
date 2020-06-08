@@ -69,7 +69,7 @@ func ByteFormat(inputNum float64, precision int) string {
 		unit = " PB" // petabyte
 	} else if inputNum >= 1000000000000 {
 		returnVal = RoundUp((inputNum / 1099511627776), precision)
-		unit = " TB" // terrabyte
+		unit = " TB" // terabyte
 	} else if inputNum >= 1000000000 {
 		returnVal = RoundUp((inputNum / 1073741824), precision)
 		unit = " GB" // gigabyte
@@ -178,7 +178,7 @@ func generateInfo(config Config, title xterm256.Color, info xterm256.Color, user
 
 			s = append(s, xterm256.Sprint(title, "Proccesses Running: ")+xterm256.Sprint(info, int64(len(pids))))
 		case "wversion":
-			k, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows NT\CurrentVersion`, registry.QUERY_VALUE)
+			k, _ := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows NT\CurrentVersion`, registry.QUERY_VALUE)
 
 			pn, _, err := k.GetStringValue("ProductName")
 			if err != nil {
