@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"github.com/gilliek/go-xterm256/xterm256"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,6 +11,8 @@ import (
 	"os/user"
 	"strings"
 	"unicode/utf8"
+
+	"github.com/gilliek/go-xterm256/xterm256"
 )
 
 func getCustomColor(color string) xterm256.Color {
@@ -156,13 +157,13 @@ func main() {
 		}
 	}
 	var winArtResult []string
-	if config.UseSmallAscii {
+	if config.UseSmallASCII {
 		winArtResult = strings.Split(winArtSmall, "\n")
 	} else {
 		winArtResult = strings.Split(winArt, "\n")
 	}
-	if config.UseCustomAscii {
-		content, err := ioutil.ReadFile(config.CustomAsciiPath)
+	if config.UseCustomASCII {
+		content, err := ioutil.ReadFile(config.CustomASCIIPath)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -170,28 +171,28 @@ func main() {
 	}
 
 	title := xterm256.Green
-	ascii := xterm256.Blue
+	ASCII := xterm256.Blue
 	sep := xterm256.Red
 	userc := xterm256.Red
 	info := xterm256.White
 
 	if !config.UseDefaultColors {
 		title = getCustomColor(config.TitleColor)
-		ascii = getCustomColor(config.AsciiColor)
+		ASCII = getCustomColor(config.ASCIIColor)
 		sep = getCustomColor(config.SepColor)
 		userc = getCustomColor(config.UserColor)
 		info = getCustomColor(config.InfoColor)
 	}
 	s = generateInfo(config, title, info, userc, sep)
-	if config.ShowAscii {
+	if config.ShowASCII {
 		scanner := bufio.NewScanner(strings.NewReader(""))
-		if config.UseSmallAscii {
+		if config.UseSmallASCII {
 			scanner = bufio.NewScanner(strings.NewReader(winArtSmall))
 		} else {
 			scanner = bufio.NewScanner(strings.NewReader(winArt))
 		}
-		if config.UseCustomAscii {
-			content, err := ioutil.ReadFile(config.CustomAsciiPath)
+		if config.UseCustomASCII {
+			content, err := ioutil.ReadFile(config.CustomASCIIPath)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -203,12 +204,12 @@ func main() {
 			if len(winArtResult)-1 < i {
 				fmt.Println(strings.Repeat(" ", utf8.RuneCountInString(winArtResult[0])) + "    " + str)
 			} else {
-				fmt.Println(xterm256.Sprint(ascii, winArtResult[i]) + "    " + str)
+				fmt.Println(xterm256.Sprint(ASCII, winArtResult[i]) + "    " + str)
 			}
 		}
 		for scanner.Scan() {
 			if index >= len(s) {
-				fmt.Println(xterm256.Sprint(ascii, scanner.Text()))
+				fmt.Println(xterm256.Sprint(ASCII, scanner.Text()))
 			}
 			index++
 		}

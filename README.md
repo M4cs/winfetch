@@ -65,7 +65,7 @@ go build
 
 [xterm-256](https://github.com/gilliek/go-xterm256) - Color Printing To Terminal
 
-[neofetch](https://github.com/dylanaraps/neofetch) - Inspiration and Ascii Art
+[neofetch](https://github.com/dylanaraps/neofetch) - Inspiration and ASCII Art
 
 
 ## Contribution

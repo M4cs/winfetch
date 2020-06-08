@@ -10,7 +10,7 @@ import (
 
 	hst "github.com/shirou/gopsutil/host"
 	ps "github.com/shirou/gopsutil/process"
-	// cp "github.com/shirou/gopsutil/cpu"
+
 	"github.com/gilliek/go-xterm256/xterm256"
 	"github.com/jaypipes/ghw"
 	"golang.org/x/sys/windows/registry"
@@ -25,6 +25,7 @@ func indexOf(element string, data []string) int {
 	return -1 //not found.
 }
 
+// Find - Find String inside String
 func Find(slice []string, val string) (int, bool) {
 	for i, item := range slice {
 		if item == val {
@@ -34,6 +35,7 @@ func Find(slice []string, val string) (int, bool) {
 	return -1, false
 }
 
+// RoundUp - Round Float Up To New Value
 func RoundUp(input float64, places int) (newVal float64) {
 	var round float64
 	pow := math.Pow(10, float64(places))
@@ -43,6 +45,7 @@ func RoundUp(input float64, places int) (newVal float64) {
 	return
 }
 
+// ByteFormat - Format Bytes to Human Readable
 func ByteFormat(inputNum float64, precision int) string {
 
 	if precision <= 0 {

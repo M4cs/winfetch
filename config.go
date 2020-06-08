@@ -6,23 +6,25 @@ import (
 	"os/user"
 )
 
+// Config Struct for Configuration File
 type Config struct {
-	Format           []string    `json:"format"`
-	ShowAscii        bool        `json:"showAscii"`
-	UseDefaultColors bool        `json:"useDefaultColors"`
-	UseSmallAscii    bool        `json:"useSmallAscii"`
-	AsciiColor       string      `json:"asciiColor"`
-	UseCustomAscii   bool        `json:"useCustomAscii"`
-	CustomAsciiPath  string      `json:"customAsciiPath"`
-	UserColor        string      `json:"userColor"`
-	SepColor         string      `json:"sepColor"`
-	TitleColor       string      `json:"titleColor"`
-	InfoColor        string      `json:"infoColor"`
-	Titles           TitleValues `json:"titles"`
-	AutoUpdate       bool        `json:"autoupdate"`
-	Version          int64       `json:"configVersion"`
+	Format           []string    `json:"format"`           // Format Array for Modules
+	ShowASCII        bool        `json:"showASCII"`        // True/False to Display ASCII
+	UseDefaultColors bool        `json:"useDefaultColors"` // Use Default Colors
+	UseSmallASCII    bool        `json:"useSmallASCII"`    // Use Small ASCII Art
+	ASCIIColor       string      `json:"ASCIIColor"`       // Change ASCII Color
+	UseCustomASCII   bool        `json:"useCustomASCII"`   // Use Custom ASCII TRUE/FALSE
+	CustomASCIIPath  string      `json:"customASCIIPath"`  // Absolute Path to Custom ASCII
+	UserColor        string      `json:"userColor"`        // Color for Username
+	SepColor         string      `json:"sepColor"`         // Color for Separator
+	TitleColor       string      `json:"titleColor"`       // Color for Title
+	InfoColor        string      `json:"infoColor"`        // Color for Information
+	Titles           TitleValues `json:"titles"`           // Title Struct
+	AutoUpdate       bool        `json:"autoupdate"`       // Should Auto Update?
+	Version          int64       `json:"configVersion"`    // Configuration Version
 }
 
+// TitleValues Struct for Title Strings
 type TitleValues struct {
 	Memory         string `json:"memory"`
 	CPU            string `json:"cpu"`
@@ -50,12 +52,12 @@ func updateConfig(config Config) {
 func newConfig() Config {
 	config := Config{}
 	config.Format = []string{"user", "sep", "uptime", "mem", "cpu", "procs", "cpuCores", "cpuThreads", "disk", "wversion", "gpus", "bios", "baseboard"}
-	config.ShowAscii = true
-	config.UseSmallAscii = false
-	config.UseCustomAscii = false
-	config.CustomAsciiPath = ""
+	config.ShowASCII = true
+	config.UseSmallASCII = false
+	config.UseCustomASCII = false
+	config.CustomASCIIPath = ""
 	config.UseDefaultColors = true
-	config.AsciiColor = "Blue"
+	config.ASCIIColor = "Blue"
 	config.UserColor = "Red"
 	config.SepColor = "Red"
 	config.TitleColor = "Green"
