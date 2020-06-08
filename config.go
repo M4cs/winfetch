@@ -9,12 +9,12 @@ import (
 // Config Struct for Configuration File
 type Config struct {
 	Format           []string    `json:"format"`           // Format Array for Modules
-	ShowASCII        bool        `json:"showASCII"`        // True/False to Display ASCII
+	ShowASCII        bool        `json:"showAscii"`        // True/False to Display ASCII
 	UseDefaultColors bool        `json:"useDefaultColors"` // Use Default Colors
-	UseSmallASCII    bool        `json:"useSmallASCII"`    // Use Small ASCII Art
-	ASCIIColor       string      `json:"ASCIIColor"`       // Change ASCII Color
-	UseCustomASCII   bool        `json:"useCustomASCII"`   // Use Custom ASCII TRUE/FALSE
-	CustomASCIIPath  string      `json:"customASCIIPath"`  // Absolute Path to Custom ASCII
+	UseSmallASCII    bool        `json:"useSmallAscii"`    // Use Small ASCII Art
+	ASCIIColor       string      `json:"asciiColor"`       // Change ASCII Color
+	UseCustomASCII   bool        `json:"useCustomAscii"`   // Use Custom ASCII TRUE/FALSE
+	CustomASCIIPath  string      `json:"customAsciiPath"`  // Absolute Path to Custom ASCII
 	UserColor        string      `json:"userColor"`        // Color for Username
 	SepColor         string      `json:"sepColor"`         // Color for Separator
 	TitleColor       string      `json:"titleColor"`       // Color for Title
