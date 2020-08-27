@@ -37,21 +37,27 @@ type TitleValues struct {
 	Baseboard      string `json:"baseboard"`
 	ProcessCount   string `json:"processCount"`
 	Uptime         string `json:"uptime"`
+	Network        string `json:"network"`
 }
 
 func updateConfig(config Config) {
 	user, _ := user.Current()
 	if config.Version == 0 {
 		config.AutoUpdate = true
+		config.Version = 1
 	}
-	config.Version = 1
+	if config.Version == 1 {
+		config.Titles.Network = "Local IP"
+		config.Format = append(config.Format, "network")
+		config.Version = 2
+	}
 	file, _ := json.MarshalIndent(config, "", " ")
 	_ = ioutil.WriteFile(user.HomeDir+"\\.winfetch.json", file, 0644)
 }
 
 func newConfig() Config {
 	config := Config{}
-	config.Format = []string{"user", "sep", "uptime", "mem", "cpu", "procs", "cpuCores", "cpuThreads", "disk", "wversion", "gpus", "bios", "baseboard"}
+	config.Format = []string{"user", "sep", "uptime", "mem", "cpu", "procs", "cpuCores", "cpuThreads", "disk", "wversion", "gpus", "bios", "baseboard", "network"}
 	config.ShowASCII = true
 	config.UseSmallASCII = false
 	config.UseCustomASCII = false
@@ -73,6 +79,7 @@ func newConfig() Config {
 	config.Titles.Uptime = "Uptime"
 	config.Titles.ProcessCount = "Processes"
 	config.Titles.CPU = "CPU #"
+	config.Titles.Network = "Local IP"
 	config.AutoUpdate = true
 	config.Version = 1
 	return config

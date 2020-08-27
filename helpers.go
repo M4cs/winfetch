@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"math"
+	"net"
 	"os/user"
 	"strconv"
 	"strings"
@@ -138,6 +139,9 @@ func generateInfo(config Config, title xterm256.Color, info xterm256.Color, user
 	}
 	for x := range config.Format {
 		switch config.Format[x] {
+		case "network":
+			outboundIP := getOutboundIP()
+			s = append(s, xterm256.Sprint(title, config.Titles.Network+": ")+xterm256.Sprint(info, outboundIP.String()))
 		case "user":
 			user, _ := user.Current()
 			s = append(s, xterm256.Sprint(userc, strings.ReplaceAll(user.Username, "\\", "@")))
@@ -229,4 +233,16 @@ func generateInfo(config Config, title xterm256.Color, info xterm256.Color, user
 	s = append(s, "    "+xterm256.Sprint(xterm256.LightGray, "███")+xterm256.Sprint(xterm256.Red, "███")+xterm256.Sprint(xterm256.Green, "███")+xterm256.Sprint(xterm256.Yellow, "███")+xterm256.Sprint(xterm256.Blue, "███")+xterm256.Sprint(xterm256.Magenta, "███")+xterm256.Sprint(xterm256.Cyan, "███"))
 	s = append(s, "    "+xterm256.Sprint(xterm256.DarkGray, "███")+xterm256.Sprint(xterm256.DarkRed, "███")+xterm256.Sprint(xterm256.DarkGreen, "███")+xterm256.Sprint(xterm256.DarkYellow, "███")+xterm256.Sprint(xterm256.DarkBlue, "███")+xterm256.Sprint(xterm256.DarkMagenta, "███")+xterm256.Sprint(xterm256.DarkCyan, "███"))
 	return s
+}
+
+func getOutboundIP() net.IP {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+
+	return localAddr.IP
 }
