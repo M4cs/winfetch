@@ -82,7 +82,7 @@ func main() {
 	if update {
 		resp, err := http.Get("https://raw.githubusercontent.com/M4cs/winfetch/master/version")
 		if err != nil {
-			fmt.Println("Couldn't check for upate. Are you connected to the internet?")
+			fmt.Println("Couldn't check for update. Are you connected to the internet?")
 		}
 		defer resp.Body.Close()
 		body, _ := ioutil.ReadAll(resp.Body)
